@@ -1,0 +1,39 @@
+{
+  "name": "adminjs_ecommerce_dashboard",
+  "version": "1.0.0",
+  "description": "This project is a secure and role-based Admin Dashboard built for a basic eCommerce backend using Node.js, Express, AdminJS, Sequelize ORM, and PostgreSQL.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js",
+    "seed": "node src/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madhusankanimesh/adminjs_ecommerce_dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/madhusankanimesh/adminjs_ecommerce_dashboard/issues"
+  },
+  "homepage": "https://github.com/madhusankanimesh/adminjs_ecommerce_dashboard#readme",
+  "dependencies": {
+    "@adminjs/express": "^5.0.1",
+    "@adminjs/sequelize": "^3.0.0",
+    "adminjs": "^7.8.17",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
