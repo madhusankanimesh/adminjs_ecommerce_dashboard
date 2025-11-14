@@ -15,8 +15,17 @@ OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
 OrderItem.belongsTo(Product, { foreignKey: 'productId' });
 
 const initDB = async () => {
-  await sequelize.authenticate();
-  await sequelize.sync({ alter: true }); // for dev. Use migrations for prod.
+  try {
+    await sequelize.authenticate();
+    console.log('✓ Database connection established');
+    
+    // Force sync to recreate tables (use only in development!)
+    await sequelize.sync({ force: true });
+    console.log('✓ All tables created successfully');
+  } catch (error) {
+    console.error('✗ Database initialization failed:', error);
+    throw error;
+  }
 };
 
 module.exports = { sequelize, User, Product, Category, Order, OrderItem, Setting, initDB };
