@@ -1,19 +1,32 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
+// Azure App Service uses different environment variable names
+const DB_NAME = process.env.AZURE_POSTGRESQL_DATABASE || process.env.DB_NAME || 'adminjs_db';
+const DB_USER = process.env.AZURE_POSTGRESQL_USER || process.env.DB_USER || 'postgres';
+const DB_PASSWORD = process.env.AZURE_POSTGRESQL_PASSWORD || process.env.DB_PASSWORD || '1234';
+const DB_HOST = process.env.AZURE_POSTGRESQL_HOST || process.env.DB_HOST || 'localhost';
+const DB_PORT = process.env.AZURE_POSTGRESQL_PORT || process.env.DB_PORT || 5432;
+const SSL_ENABLED = process.env.AZURE_POSTGRESQL_SSL === 'true' || (DB_HOST && DB_HOST.includes('azure.com'));
+
 const isProduction = process.env.NODE_ENV === 'production';
-const isAzure = process.env.DB_HOST && process.env.DB_HOST.includes('azure.com');
+
+console.log('🔌 Database Configuration:');
+console.log(`   Host: ${DB_HOST}`);
+console.log(`   Database: ${DB_NAME}`);
+console.log(`   User: ${DB_USER}`);
+console.log(`   SSL: ${SSL_ENABLED ? 'Enabled' : 'Disabled'}`);
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME || 'adminjs_db',
-  process.env.DB_USER || 'postgres',
-  process.env.DB_PASSWORD || '1234',
+  DB_NAME,
+  DB_USER,
+  DB_PASSWORD,
   {
-    host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || 5432,
+    host: DB_HOST,
+    port: DB_PORT,
     dialect: 'postgres',
     logging: false, // Set to console.log to see SQL queries
-    dialectOptions: isAzure ? {
+    dialectOptions: SSL_ENABLED ? {
       ssl: {
         require: true,
         rejectUnauthorized: false // Azure PostgreSQL requires SSL
