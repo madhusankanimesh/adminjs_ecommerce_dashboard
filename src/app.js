@@ -55,20 +55,9 @@ app.use(session({
   proxy: true // Trust the reverse proxy
 }));
 
-// Root route
+// Root route - redirect to AdminJS login
 app.get('/', (req, res) => {
-  res.json({
-    message: '🛍️ eCommerce Admin API',
-    version: '1.0.0',
-    endpoints: {
-      admin: 'GET /admin (AdminJS Interface - requires login)',
-      login: 'POST /api/login (JWT Authentication)',
-      health: 'GET /health'
-    },
-    credentials: {
-      admin: { email: 'admin@ecommerce.com', password: 'admin123' }
-    }
-  });
+  res.redirect('/admin/login');
 });
 
 // Health check
