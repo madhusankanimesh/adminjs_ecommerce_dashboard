@@ -23,14 +23,22 @@ const initDB = async () => {
     console.log('✓ Database connection established successfully');
     console.log(`✓ Connected to: ${process.env.DB_NAME} on ${process.env.DB_HOST}:${process.env.DB_PORT}`);
     
-    // Only sync schema, don't force recreate
-    await sequelize.sync({ alter: false });
-    console.log('✓ Database tables synchronized');
+    // Check if we should force recreate the database
+    const forceSync = process.env.FORCE_DB_SYNC === 'true';
+    
+    if (forceSync) {
+      console.log('⚠️  FORCE_DB_SYNC is enabled - recreating all tables...');
+      await sequelize.sync({ force: true });
+      console.log('✓ Database tables recreated');
+    } else {
+      await sequelize.sync({ alter: true });
+      console.log('✓ Database tables synchronized');
+    }
     
     // Create admin user if it doesn't exist
     await createAdminIfNotExists();
   } catch (error) {
-    console.error('✗ Database initialization failed:', error);
+    console.error('✗ Database initialization failed:', error.message);
     throw error;
   }
 };

@@ -1,15 +1,14 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Azure App Service uses different environment variable names
+// Database Configuration - supports Azure and Neon PostgreSQL
 const DB_NAME = process.env.AZURE_POSTGRESQL_DATABASE || process.env.DB_NAME || 'adminjs_db';
 const DB_USER = process.env.AZURE_POSTGRESQL_USER || process.env.DB_USER || 'postgres';
 const DB_PASSWORD = process.env.AZURE_POSTGRESQL_PASSWORD || process.env.DB_PASSWORD || '1234';
 const DB_HOST = process.env.AZURE_POSTGRESQL_HOST || process.env.DB_HOST || 'localhost';
 const DB_PORT = process.env.AZURE_POSTGRESQL_PORT || process.env.DB_PORT || 5432;
-// Azure PostgreSQL always requires SSL
-const SSL_ENABLED = (DB_HOST && DB_HOST.includes('azure.com')) || process.env.AZURE_POSTGRESQL_SSL === 'true';
-//
+// SSL is required for both Azure and Neon PostgreSQL
+const SSL_ENABLED = (DB_HOST && (DB_HOST.includes('azure.com') || DB_HOST.includes('neon.tech'))) || process.env.AZURE_POSTGRESQL_SSL === 'true';
 const isProduction = process.env.NODE_ENV === 'production';
 
 console.log('🔌 Database Configuration:');
@@ -40,6 +39,9 @@ const sequelize = new Sequelize(
       min: 0,
       acquire: 60000, // Increased timeout for VNet connections
       idle: 10000
+    },
+    define: {
+      schema: 'public'
     }
   }
 );
