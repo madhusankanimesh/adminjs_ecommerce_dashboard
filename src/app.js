@@ -132,27 +132,28 @@ const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
 app.use(adminJs.options.rootPath, adminRouter);
 
 const start = async () => {
+  const port = process.env.PORT || 3000;
+  const host = process.env.HOST || '0.0.0.0'; // Azure requires 0.0.0.0
+  
+  // Start server first
+  app.listen(port, host, () => {
+    console.log('\n🚀 Server started successfully!');
+    console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`📍 Server URL: http://${host}:${port}`);
+    console.log(`🎛️  Admin Panel: http://${host}:${port}/admin`);
+    console.log(`🔐 API Login: POST http://${host}:${port}/api/login`);
+    console.log('\n💡 TIP: Set FORCE_DB_SYNC=true to recreate database with sample data\n');
+  });
+  
+  // Then try to connect to database
   try {
     console.log('🔌 Connecting to database...');
     await initDB();
     console.log('✅ Database connected successfully!');
-    
-    const port = process.env.PORT || 3000;
-    const host = process.env.HOST || '0.0.0.0'; // Azure requires 0.0.0.0
-    
-    app.listen(port, host, () => {
-      console.log('\n🚀 Server started successfully!');
-      console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`📍 Server URL: http://${host}:${port}`);
-      console.log(`🎛️  Admin Panel: http://${host}:${port}/admin`);
-      console.log(`🔐 API Login: POST http://${host}:${port}/api/login`);
-      console.log('\n💡 TIP: Set FORCE_DB_SYNC=true to recreate database with sample data\n');
-    });
   } catch (error) {
-    console.error('❌ Server failed to start:', error);
-    console.error('Error details:', error.message);
-    console.error('Stack trace:', error.stack);
-    process.exit(1);
+    console.error('❌ Database connection failed:', error.message);
+    console.error('⚠️  Server running but database features will not work');
+    console.error('💡 Please configure database environment variables in Azure');
   }
 };
 

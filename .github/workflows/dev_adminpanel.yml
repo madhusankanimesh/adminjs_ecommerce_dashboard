@@ -67,4 +67,3 @@ jobs:
           app-name: 'AdminPanel'
           slot-name: 'Production'
           package: .
-          startup-command: 'npm install --production && node src/app.js'
