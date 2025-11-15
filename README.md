@@ -1,19 +1,19 @@
-# 🛍️ Role-Based eCommerce Admin Dashboard
+# Role-Based eCommerce Admin Dashboard
 
 A **professional, secure, and feature-rich** admin panel for eCommerce management built with **AdminJS**, **Sequelize ORM**, and **PostgreSQL**. This project demonstrates enterprise-level authentication, role-based access control, and a beautiful, intuitive admin interface.
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 🔐 Security & Authentication
+###  Security & Authentication
 - **JWT-based API authentication** for RESTful endpoints
 - **Session-based authentication** for AdminJS interface
 - **Bcrypt password hashing** for secure credential storage
 - **Role-based access control (RBAC)** with granular permissions
 - **HTTP-only cookies** for session management
 
-### 👥 Role Management
+### Role Management
 #### Admin Users
 - Full access to all resources and features
 - User management (create, edit, delete users)
@@ -34,14 +34,14 @@ A **professional, secure, and feature-rich** admin panel for eCommerce managemen
   - Pending orders
 - Restricted from user management and system settings
 
-### 📊 Dashboard & Analytics
+###  Dashboard & Analytics
 - **Dynamic dashboard** that adapts based on user role
 - Real-time statistics and KPIs
 - Visual indicators with emojis for better UX
 - Recent activity tracking
 - Low stock product alerts for admins
 
-### 🎨 User Interface
+###  User Interface
 - **Modern, professional design** with custom indigo theme
 - **Organized navigation** with emoji icons
 - **Responsive layout** that works on all devices
@@ -50,7 +50,7 @@ A **professional, secure, and feature-rich** admin panel for eCommerce managemen
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - **Node.js** (v14 or higher)
@@ -105,7 +105,7 @@ A **professional, secure, and feature-rich** admin panel for eCommerce managemen
 
 ---
 
-## 🔑 Default Credentials
+##  Default Credentials
 
 ### Administrator Account
 - **Email:** `admin@ecommerce.com`
@@ -119,7 +119,7 @@ A **professional, secure, and feature-rich** admin panel for eCommerce managemen
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 adminjs_ecommerce_dashboard/
@@ -232,7 +232,7 @@ Response:
 
 ---
 
-## 🎯 Features Demonstration
+## Features Demonstration
 
 ### 1. Role-Based Access Control
 - **Admin** can see all 6 resources: Users, Products, Categories, Orders, OrderItems, Settings
@@ -286,7 +286,7 @@ npm start
 
 ---
 
-## 🎨 Customization
+## Customization
 
 ### Changing Theme Colors
 Edit `src/admin/admin.js`:
@@ -308,9 +308,9 @@ theme: {
 
 ---
 
-## 🔒 Security Best Practices
+## Security Best Practices
 
-✅ **Implemented:**
+ **Implemented:**
 - Password hashing with bcrypt
 - JWT for API authentication
 - Session-based auth for AdminJS
@@ -319,7 +319,7 @@ theme: {
 - Environment variable configuration
 - SQL injection prevention (Sequelize ORM)
 
-⚠️ **For Production:**
+  **For Production:**
 - Change `JWT_SECRET` to a strong random value
 - Set `NODE_ENV=production`
 - Enable HTTPS
@@ -330,7 +330,7 @@ theme: {
 
 ---
 
-## 📦 Technologies Used
+## 📦Technologies Used
 
 - **Backend:** Node.js + Express.js
 - **Admin Panel:** AdminJS v7
@@ -342,7 +342,7 @@ theme: {
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Database Connection Error
 ```bash
@@ -368,60 +368,6 @@ PORT=4000
 
 ---
 
-## 📝 Assignment Requirements Checklist
-
-✅ **Core Setup**
-- [x] Node.js + Express backend
-- [x] Sequelize ORM with PostgreSQL
-- [x] AdminJS integration
-- [x] Bcrypt for password hashing
-- [x] JWT-based authentication
-
-✅ **Database Models**
-- [x] User model with role field
-- [x] Category model
-- [x] Product model
-- [x] Order model
-- [x] OrderItem model
-- [x] Setting model
-
-✅ **AdminJS Configuration**
-- [x] All models added to AdminJS
-- [x] Relationships configured (Product → Category, Order → User, etc.)
-- [x] Password field hidden from all views
-- [x] Relational data displayed clearly
-
-✅ **Authentication**
-- [x] `/api/login` endpoint implemented
-- [x] Secure password storage with bcrypt
-- [x] JWT for session handling
-- [x] AdminJS requires authentication
-
-✅ **Role-Based Access Control**
-- [x] Admins can access all resources
-- [x] Admins can add/edit/delete entities
-- [x] Custom admin dashboard with statistics
-- [x] Regular users have limited access
-- [x] Users cannot see User/Setting tables
-- [x] Limited dashboard for regular users
-- [x] `isAccessible` and `isVisible` configured
-
-✅ **Dashboard & Settings**
-- [x] Custom dashboard with analytics
-- [x] Role-specific dashboard content
-- [x] Settings page for configuration
-- [x] Professional and attractive design
-
----
-
-## 📄 License
-
-ISC
-
----
-
-## 👨‍💻 Author
-
 **Nimesh Madhusanka**
 
 - GitHub: [@madhusankanimesh](https://github.com/madhusankanimesh)
@@ -429,12 +375,3 @@ ISC
 
 ---
 
-## 🙏 Acknowledgments
-
-- [AdminJS](https://adminjs.co/) for the amazing admin panel framework
-- [Sequelize](https://sequelize.org/) for the robust ORM
-- [PostgreSQL](https://www.postgresql.org/) for the reliable database
-
----
-
-**Made with ❤️ for eCommerce Management**
