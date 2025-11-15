@@ -138,19 +138,33 @@ const start = async () => {
     console.log('✅ Database connected successfully!');
     
     const port = process.env.PORT || 3000;
-    app.listen(port, () => {
+    const host = process.env.HOST || '0.0.0.0'; // Azure requires 0.0.0.0
+    
+    app.listen(port, host, () => {
       console.log('\n🚀 Server started successfully!');
       console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`📍 Server URL: http://localhost:${port}`);
-      console.log(`🎛️  Admin Panel: http://localhost:${port}/admin`);
-      console.log(`🔐 API Login: POST http://localhost:${port}/api/login`);
+      console.log(`📍 Server URL: http://${host}:${port}`);
+      console.log(`🎛️  Admin Panel: http://${host}:${port}/admin`);
+      console.log(`🔐 API Login: POST http://${host}:${port}/api/login`);
       console.log('\n💡 TIP: Set FORCE_DB_SYNC=true to recreate database with sample data\n');
     });
   } catch (error) {
     console.error('❌ Server failed to start:', error);
     console.error('Error details:', error.message);
+    console.error('Stack trace:', error.stack);
     process.exit(1);
   }
 };
 
 start();
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('❌ Uncaught Exception:', error);
+  process.exit(1);
+});
