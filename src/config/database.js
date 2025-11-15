@@ -8,7 +8,7 @@ const DB_PASSWORD = process.env.AZURE_POSTGRESQL_PASSWORD || process.env.DB_PASS
 const DB_HOST = process.env.AZURE_POSTGRESQL_HOST || process.env.DB_HOST || 'localhost';
 const DB_PORT = process.env.AZURE_POSTGRESQL_PORT || process.env.DB_PORT || 5432;
 const SSL_ENABLED = process.env.AZURE_POSTGRESQL_SSL === 'true' || (DB_HOST && DB_HOST.includes('azure.com'));
-
+//
 const isProduction = process.env.NODE_ENV === 'production';
 
 console.log('🔌 Database Configuration:');
