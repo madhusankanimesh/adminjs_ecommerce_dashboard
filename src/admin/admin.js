@@ -382,7 +382,7 @@ const adminJs = new AdminJS({
             description: 'Available quantity'
           },
           categoryId: {
-            reference: 'Category',
+            reference: 'categories',
             isRequired: true,
             position: 6,
             description: 'Product category'
@@ -568,7 +568,7 @@ const adminJs = new AdminJS({
         properties: {
           id: { isTitle: true, position: 1 },
           userId: {
-            reference: 'User',
+            reference: 'users',
             isRequired: true,
             position: 2,
             description: 'Customer'
@@ -666,13 +666,13 @@ const adminJs = new AdminJS({
         properties: {
           id: { isTitle: true, position: 1 },
           orderId: {
-            reference: 'Order',
+            reference: 'orders',
             isRequired: true,
             position: 2,
             description: 'Related order'
           },
           productId: {
-            reference: 'Product',
+            reference: 'products',
             isRequired: true,
             position: 3,
             description: 'Product'

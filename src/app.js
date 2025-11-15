@@ -12,6 +12,23 @@ const app = express();
 app.use(express.json());
 app.use(require('cors')());
 
+// 🔍 Add error logging middleware
+app.use((req, res, next) => {
+  const originalJson = res.json;
+  res.json = function(data) {
+    if (req.url.includes('/admin/api') && res.statusCode >= 400) {
+      console.error('❌ AdminJS Error:', {
+        url: req.url,
+        method: req.method,
+        status: res.statusCode,
+        error: data
+      });
+    }
+    return originalJson.call(this, data);
+  };
+  next();
+});
+
 // Session middleware for AdminJS authentication
 app.use(session({
   secret: process.env.JWT_SECRET || 'supersecret-change-in-production',
