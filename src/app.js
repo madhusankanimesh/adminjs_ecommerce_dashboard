@@ -9,8 +9,20 @@ const authRoutes = require('./routes/auth');
 require('dotenv').config();
 
 const app = express();
+
+// Trust proxy - IMPORTANT for production hosting (Heroku, Render, etc.)
+app.set('trust proxy', 1);
+
 app.use(express.json());
-app.use(require('cors')());
+
+// CORS configuration for production
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || '*',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(require('cors')(corsOptions));
 
 // 🔍 Add error logging middleware
 app.use((req, res, next) => {
@@ -36,9 +48,11 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Important for hosted environments
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }
+  },
+  proxy: true // Trust the reverse proxy
 }));
 
 // Root route
@@ -75,17 +89,18 @@ const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
   adminJs,
   {
     authenticate: async (email, password) => {
+      console.log('🔐 Login attempt for:', email);
       const user = await User.findOne({ where: { email } });
       
       if (!user) {
-        console.log('❌ Login failed: User not found');
+        console.log('❌ Login failed: User not found -', email);
         return null;
       }
       
       const isValid = await bcrypt.compare(password, user.password);
       
       if (!isValid) {
-        console.log('❌ Login failed: Invalid password');
+        console.log('❌ Login failed: Invalid password for -', email);
         return null;
       }
       
@@ -108,7 +123,9 @@ const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-    }
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    },
+    proxy: true
   }
 );
 
@@ -116,10 +133,14 @@ app.use(adminJs.options.rootPath, adminRouter);
 
 const start = async () => {
   try {
+    console.log('🔌 Connecting to database...');
     await initDB();
+    console.log('✅ Database connected successfully!');
+    
     const port = process.env.PORT || 3000;
     app.listen(port, () => {
       console.log('\n🚀 Server started successfully!');
+      console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(`📍 Server URL: http://localhost:${port}`);
       console.log(`🎛️  Admin Panel: http://localhost:${port}/admin`);
       console.log(`🔐 API Login: POST http://localhost:${port}/api/login`);
@@ -127,6 +148,7 @@ const start = async () => {
     });
   } catch (error) {
     console.error('❌ Server failed to start:', error);
+    console.error('Error details:', error.message);
     process.exit(1);
   }
 };
