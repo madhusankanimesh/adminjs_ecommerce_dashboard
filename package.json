@@ -4,7 +4,7 @@
   "description": "This project is a secure and role-based Admin Dashboard built for a basic eCommerce backend using Node.js, Express, AdminJS, Sequelize ORM, and PostgreSQL.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"No tests specified\"",
     "dev": "nodemon src/app.js",
     "start": "node src/app.js",
     "seed": "node src/seed.js"
