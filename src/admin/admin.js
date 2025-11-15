@@ -142,7 +142,7 @@ const adminJs = new AdminJS({
   ...brandingConfig,
   rootPath: '/admin',
   componentLoader,
-  
+   
   dashboard: {
     component: componentLoader.add('Dashboard', '../components/Dashboard'),
     handler: async (request, response, context) => {
